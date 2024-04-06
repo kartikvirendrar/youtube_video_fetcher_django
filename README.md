@@ -1,3 +1,13 @@
+Create Virtual Environment-
+
+    python3 -m venv <ENVIRONMENT-NAME>
+    source <ENVIRONMENT-NAME>/bin/activate 
+    pip install -r requirements.txt
+
+Setup Environment Variables-
+
+    cp .env.example .env
+
 Django Command-
 
     python ytfetch/manage.py runserver
