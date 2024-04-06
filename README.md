@@ -8,6 +8,7 @@ Celery Commands-
     celery -A ytfetch beat -l info
 
 API's-
+
     GET /api/videos: 
         endpoint to retrieve a list of videos with pagination.
 
@@ -35,3 +36,7 @@ API's-
 
         Example Request:
             GET /api/videos/?page=1&page_size=10
+
+Dashboard-
+
+    Video Dashboard: http://localhost:8000/dashboard

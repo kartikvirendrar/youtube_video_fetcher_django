@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from ytvideos.views import VideoViewSet
+from ytvideos.views import VideoViewSet, video_dashboard
 
 router = DefaultRouter()
 router.register(r'videos', VideoViewSet)
@@ -24,4 +24,5 @@ router.register(r'videos', VideoViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('dashboard/', video_dashboard),
 ]
