@@ -5,11 +5,9 @@ import datetime
 from ytvideos.models import Video
 
 @app.task
-def get_videos_from_youtube_api_and_store():
-    query = 'news'
-
+def get_videos_from_youtube_api_and_store(query='news'):
     # calculate the publishedAfter datetime as current datetime minus 10 seconds
-    published_after_datetime = datetime.datetime.now() - datetime.timedelta(seconds=30)
+    published_after_datetime = datetime.datetime.now() - datetime.timedelta(seconds=10)
     published_after = published_after_datetime.isoformat()  # Convert to ISO format
 
     # service object for the YouTube Data API
@@ -22,6 +20,7 @@ def get_videos_from_youtube_api_and_store():
         type='video',
         order='date',
         publishedAfter=published_after+'Z',
+        maxResults=50,
     ).execute()
     print(search_response)
 
@@ -30,5 +29,8 @@ def get_videos_from_youtube_api_and_store():
     
     # store the video data into db
     for video in videos:
-        Video.objects.create(title=video["snippet"]["title"], description=video["snippet"]["description"], publishing_datetime=video["snippet"]["publishedAt"], thumbnail_url=video["snippet"]["thumbnails"]["default"]["url"], video_id=video["id"]["videoId"])
+        try:
+            Video.objects.create(title=video["snippet"]["title"], description=video["snippet"]["description"], publishing_datetime=video["snippet"]["publishedAt"], thumbnail_url=video["snippet"]["thumbnails"]["default"]["url"], video_id=video["id"]["videoId"])
+        except Exception as error:
+            print(error)
         print(video)
